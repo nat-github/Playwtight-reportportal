@@ -1,0 +1,114 @@
+version: '3.8'
+
+services:
+  # ReportPortal Services
+  reportportal-mongo:
+    image: mongo:5.0
+    container_name: reportportal-mongo
+    restart: always
+    networks:
+      - reportportal-network
+    volumes:
+      - mongo_data:/data/db
+
+  reportportal-elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.0
+    container_name: reportportal-elasticsearch
+    restart: always
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    networks:
+      - reportportal-network
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+
+  reportportal-rabbitmq:
+    image: rabbitmq:3.8-management
+    container_name: reportportal-rabbitmq
+    restart: always
+    environment:
+      - RABBITMQ_DEFAULT_USER=rpuser
+      - RABBITMQ_DEFAULT_PASS=rppass
+    networks:
+      - reportportal-network
+
+  reportportal-api:
+    image: reportportal/service-api:5.10.0
+    container_name: reportportal-api
+    restart: always
+    depends_on:
+      - reportportal-mongo
+      - reportportal-elasticsearch
+      - reportportal-rabbitmq
+    environment:
+      - RP_PROFILES=docker
+      - RP_DB_HOST=reportportal-mongo
+      - RP_AMQP_HOST=reportportal-rabbitmq
+      - RP_AMQP_USER=rpuser
+      - RP_AMQP_PASS=rppass
+      - RP_JWT_SECRET=your-jwt-secret-here-change-this
+    networks:
+      - reportportal-network
+
+  reportportal-uat:
+    image: reportportal/service-uat:5.10.0
+    container_name: reportportal-uat
+    restart: always
+    depends_on:
+      - reportportal-api
+    environment:
+      - RP_PROFILES=docker
+      - RP_SERVER_PORT=9999
+    networks:
+      - reportportal-network
+    ports:
+      - "9999:9999"
+
+  reportportal-ui:
+    image: reportportal/service-ui:5.10.0
+    container_name: reportportal-ui
+    restart: always
+    depends_on:
+      - reportportal-api
+    environment:
+      - RP_PROFILES=docker
+      - RP_SERVER_PORT=8080
+      - RP_API_BASE_URL=http://reportportal-api:8080
+    networks:
+      - reportportal-network
+    ports:
+      - "8080:8080"
+
+  # Playwright Tests
+  playwright-tests:
+    build: .
+    container_name: playwright-tests
+    depends_on:
+      - reportportal-ui
+    environment:
+      - BASE_URL_WEB=https://uibank.uipath.com
+      - BASE_URL_API=https://jsonplaceholder.typicode.com
+      - REPORTPORTAL_ENABLED=true
+      - REPORTPORTAL_ENDPOINT=http://reportportal-api:8080
+      - REPORTPORTAL_PROJECT=default_personal
+      - REPORTPORTAL_TOKEN=default_token_here
+      - REPORTPORTAL_LAUNCH=Playwright_Tests_${BUILD_NUMBER:-1}
+      - HEADLESS=true
+    volumes:
+      - ./reports:/app/reports
+    networks:
+      - reportportal-network
+    command: npm run test:all
+
+networks:
+  reportportal-network:
+    driver: bridge
+
+volumes:
+  mongo_data:
+  elasticsearch_data:
