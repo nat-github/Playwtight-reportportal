@@ -1,0 +1,121 @@
+{
+    "compilerOptions": {
+        // Target and Module
+        "target": "ES2022",
+        "module": "commonjs",
+        "lib": [
+            "ES2022",
+            "DOM",
+            "DOM.Iterable"
+        ],
+        // Output and Source
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "sourceMap": true,
+        "declaration": true,
+        "declarationMap": true,
+        // Strict Type Checking
+        "strict": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "strictFunctionTypes": true,
+        "strictBindCallApply": true,
+        "strictPropertyInitialization": true,
+        "noImplicitThis": true,
+        "useUnknownInCatchVariables": true,
+        "alwaysStrict": true,
+        // Additional Checks
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUncheckedIndexedAccess": true,
+        "noImplicitOverride": true,
+        "allowUnusedLabels": false,
+        "allowUnreachableCode": false,
+        // Module Resolution
+        "moduleResolution": "node",
+        "baseUrl": "./src",
+        "paths": {
+            "@config/*": [
+                "config/*"
+            ],
+            "@core/*": [
+                "core/*"
+            ],
+            "@pages/*": [
+                "pages/*"
+            ],
+            "@tests/*": [
+                "tests/*"
+            ],
+            "@support/*": [
+                "support/*"
+            ],
+            "@data/*": [
+                "data/*"
+            ],
+            "@utils/*": [
+                "core/utils/*"
+            ],
+            "@helpers/*": [
+                "core/helpers/*"
+            ],
+            "@fixtures/*": [
+                "core/fixtures/*"
+            ]
+        },
+        "typeRoots": [
+            "./node_modules/@types",
+            "./src/types"
+        ],
+        "types": [
+            "node",
+            "@playwright/test"
+        ],
+        "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true,
+        // Interop Constraints
+        "esModuleInterop": true,
+        "allowJs": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        // Advanced
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "isolatedModules": true,
+        "allowUmdGlobalAccess": false,
+        // Incremental Compilation (Performance)
+        "incremental": true,
+        "tsBuildInfoFile": "./dist/.tsbuildinfo",
+        // Output Formatting
+        "newLine": "lf",
+        "noErrorTruncation": true,
+        "preserveConstEnums": true,
+        "removeComments": false,
+        // Playwright Specific
+        "downlevelIteration": true,
+        "importHelpers": true
+    },
+    // Include and Exclude
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.tsx",
+        "src/**/*.js",
+        "src/**/*.jsx",
+        "playwright.config.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "build",
+        "coverage",
+        "reports",
+        "test-results",
+        "playwright-report",
+        "allure-report",
+        "allure-results",
+        "*.config.js",
+        "*.config.ts"
+    ],
+}
