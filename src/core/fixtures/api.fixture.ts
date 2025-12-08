@@ -36,13 +36,13 @@ export interface APITestData {
 // Extended test with API fixtures
 export const apiTest = baseTest.extend<APIFixtures>({
   // Logger fixture
-  logger: async ({}, use, testInfo) => {
+  logger: async ({ }, use, testInfo) => {
     const logger = new Logger(`API-${testInfo.title}`);
     await use(logger);
   },
 
   // API test data fixture
-  apiTestData: async ({}, use) => {
+  apiTestData: async ({ }, use) => {
     const apiTestData: APITestData = {
       posts: {
         validPost: {
@@ -83,35 +83,35 @@ export const apiTest = baseTest.extend<APIFixtures>({
     const originalPatch = request.patch.bind(request);
 
     // Override with logging
-    request.get = async function(url: string, options?: any) {
+    request.get = async function (url: string, options?: any) {
       logger.apiRequest('GET', url, options?.params);
       const response = await originalGet(url, options);
       logger.apiResponse(response.status());
       return response;
     };
 
-    request.post = async function(url: string, options?: any) {
+    request.post = async function (url: string, options?: any) {
       logger.apiRequest('POST', url, options?.data);
       const response = await originalPost(url, options);
       logger.apiResponse(response.status());
       return response;
     };
 
-    request.put = async function(url: string, options?: any) {
+    request.put = async function (url: string, options?: any) {
       logger.apiRequest('PUT', url, options?.data);
       const response = await originalPut(url, options);
       logger.apiResponse(response.status());
       return response;
     };
 
-    request.delete = async function(url: string, options?: any) {
+    request.delete = async function (url: string, options?: any) {
       logger.apiRequest('DELETE', url);
       const response = await originalDelete(url, options);
       logger.apiResponse(response.status());
       return response;
     };
 
-    request.patch = async function(url: string, options?: any) {
+    request.patch = async function (url: string, options?: any) {
       logger.apiRequest('PATCH', url, options?.data);
       const response = await originalPatch(url, options);
       logger.apiResponse(response.status());

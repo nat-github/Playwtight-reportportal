@@ -1,15 +1,15 @@
-import { apiTest, expect } from '../../core/fixtures/api.fixture';
-import { validatePost, validateCreatePost } from '../../pages/api/schemas/post.schema';
+import { apiTest, expect } from '../../src/core/fixtures/api.fixture';
+import { validatePost, validateCreatePost } from '../../src/pages/api/schemas/post.schema';
 
 apiTest.describe('JSONPlaceholder API Tests @api @smoke', () => {
- 
+
   apiTest('GET all posts', async ({
     jsonPlaceholderAPI,
     logger
   }) => {
     logger.step(1, 'Get all posts from API');
     const posts = await jsonPlaceholderAPI.getAllPosts();
-   
+
     logger.step(2, 'Verify response structure');
     logger.verification(
       'Posts is an array',
@@ -18,7 +18,7 @@ apiTest.describe('JSONPlaceholder API Tests @api @smoke', () => {
     );
     expect(posts).toBeInstanceOf(Array);
     expect(posts.length).toBeGreaterThan(0);
-   
+
     logger.step(3, 'Validate first post schema');
     const isValid = validatePost(posts[0]);
     logger.verification(
@@ -35,7 +35,7 @@ apiTest.describe('JSONPlaceholder API Tests @api @smoke', () => {
   }) => {
     logger.step(1, 'Get post with ID 1');
     const post = await jsonPlaceholderAPI.getPostById(1);
-   
+
     logger.step(2, 'Verify post properties');
     logger.verification(
       'Post ID is 1',
@@ -57,7 +57,7 @@ apiTest.describe('JSONPlaceholder API Tests @api @smoke', () => {
     const createdPost = await jsonPlaceholderAPI.createPost(
       apiTestData.posts.validPost
     );
-   
+
     logger.step(2, 'Verify post was created');
     logger.verification(
       'Post has an ID',
@@ -66,7 +66,7 @@ apiTest.describe('JSONPlaceholder API Tests @api @smoke', () => {
     );
     expect(createdPost.id).toBeDefined();
     expect(createdPost.title).toBe(apiTestData.posts.validPost.title);
-   
+
     logger.step(3, 'Validate create request schema');
     const isValid = validateCreatePost(apiTestData.posts.validPost);
     logger.verification(
@@ -87,7 +87,7 @@ apiTest.describe('JSONPlaceholder API Tests @api @smoke', () => {
       1,
       apiTestData.posts.updatePost
     );
-   
+
     logger.step(2, 'Verify post was updated');
     logger.verification(
       'Title was updated',
@@ -106,7 +106,7 @@ apiTest.describe('JSONPlaceholder API Tests @api @smoke', () => {
     await expect(
       jsonPlaceholderAPI.deletePost(1)
     ).resolves.not.toThrow();
-   
+
     logger.info('✓ Post deletion successful');
   });
 });

@@ -3,7 +3,7 @@ import { Logger } from '../helpers/logger';
 import { Environment } from '../../config/environment';
 
 export abstract class BasePage {
-  protected page: Page;
+  public page: Page;
   protected logger: Logger;
 
   constructor(page: Page) {
@@ -158,12 +158,12 @@ export abstract class BasePage {
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
     const screenshotName = `${name}-${timestamp}.png`;
     const screenshotPath = `./reports/screenshots/${screenshotName}`;
-   
+
     await this.page.screenshot({
       path: screenshotPath,
       fullPage: true
     });
-   
+
     this.logger.info(`Screenshot saved: ${screenshotPath}`);
     return screenshotPath;
   }

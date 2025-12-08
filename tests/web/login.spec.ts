@@ -1,8 +1,8 @@
 
-import { test, expect } from '../../core/fixtures/web.fixture';
+import { test, expect } from '../../src/core/fixtures/web.fixture';
 
 test.describe('UI Bank Login Tests @web @smoke', () => {
- 
+
   test('Successful login with valid credentials', async ({
     loginPage,
     logger,
@@ -10,17 +10,17 @@ test.describe('UI Bank Login Tests @web @smoke', () => {
   }) => {
     logger.step(1, 'Navigate to login page');
     await loginPage.navigateToLoginPage();
-   
+
     logger.step(2, 'Enter valid credentials');
     await loginPage.login(
       testData.user.username,
       testData.user.password
     );
-   
+
     logger.step(3, 'Verify successful login');
     await expect(loginPage.page).toHaveURL(/home|dashboard/);
     expect(await loginPage.isLoginSuccessful()).toBeTruthy();
-   
+
     logger.uiAction('Login', 'login form', 'valid credentials');
   });
 
@@ -30,10 +30,10 @@ test.describe('UI Bank Login Tests @web @smoke', () => {
   }) => {
     logger.step(1, 'Navigate to login page');
     await loginPage.navigateToLoginPage();
-   
+
     logger.step(2, 'Enter invalid credentials');
     await loginPage.login('invaliduser', 'wrongpassword');
-   
+
     logger.step(3, 'Verify error message');
     const errorMessage = await loginPage.getErrorMessage();
     logger.verification(
@@ -56,10 +56,10 @@ test.describe('UI Bank Login Tests @web @smoke', () => {
       testData.user.username,
       testData.user.password
     );
-   
+
     logger.step(2, 'Navigate to loans section');
     await loginPage.navigateToLoans();
-   
+
     logger.step(3, 'Verify loans page loaded');
     await expect(loginPage.page).toHaveURL(/loans/);
     expect(await loansPage.isPageLoaded()).toBeTruthy();
@@ -76,10 +76,10 @@ test.describe('UI Bank Login Tests @web @smoke', () => {
       testData.user.username,
       testData.user.password
     );
-   
+
     logger.step(2, 'Logout from application');
     await loginPage.logout();
-   
+
     logger.step(3, 'Verify redirected to login page');
     await expect(loginPage.page).toHaveURL(/login/);
   });

@@ -28,7 +28,7 @@ export interface TestData {
 }
 
 export interface LoanData {
-  type: string;
+  loanType: string;
   amount: number;
   term: string;
   income: number;
@@ -38,13 +38,13 @@ export interface LoanData {
 // Extended test with fixtures
 export const test = baseTest.extend<WebFixtures>({
   // Logger fixture
-  logger: async ({}, use, testInfo) => {
+  logger: async ({ }, use, testInfo) => {
     const logger = new Logger(testInfo.title);
     await use(logger);
   },
 
   // Test data fixture
-  testData: async ({}, use) => {
+  testData: async ({ }, use) => {
     const testData: TestData = {
       user: {
         username: Environment.UI_BANK_USERNAME,
@@ -53,21 +53,21 @@ export const test = baseTest.extend<WebFixtures>({
       },
       loan: {
         personal: {
-          type: 'personal',
+          loanType: 'personal',
           amount: 5000,
           term: '12 months',
           income: 60000,
           employmentStatus: 'full-time',
         },
         auto: {
-          type: 'auto',
+          loanType: 'auto',
           amount: 25000,
           term: '60 months',
           income: 80000,
           employmentStatus: 'full-time',
         },
         mortgage: {
-          type: 'mortgage',
+          loanType: 'mortgage',
           amount: 300000,
           term: '30 years',
           income: 120000,
@@ -98,7 +98,7 @@ export const test = baseTest.extend<WebFixtures>({
     page.on('console', msg => {
       const type = msg.type();
       const text = msg.text();
-     
+
       if (type === 'error' || type === 'warning') {
         logger.warn(`Browser ${type}: ${text}`);
       }

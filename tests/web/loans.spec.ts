@@ -1,7 +1,7 @@
-import { test, expect } from '../../core/fixtures/web.fixture';
+import { test, expect } from '../../src/core/fixtures/web.fixture';
 
 test.describe('UI Bank Loans Tests @web @regression', () => {
- 
+
   test.beforeEach(async ({
     loginPage,
     loansPage,
@@ -26,7 +26,7 @@ test.describe('UI Bank Loans Tests @web @regression', () => {
       isListVisible
     );
     expect(isListVisible).toBeTruthy();
-   
+
     logger.step(2, 'Get loan count');
     const loanCount = await loansPage.getLoanCount();
     logger.info(`Found ${loanCount} loans`);
@@ -40,10 +40,10 @@ test.describe('UI Bank Loans Tests @web @regression', () => {
   }) => {
     logger.step(1, 'Click Apply Now button');
     await loansPage.clickApplyNow();
-   
+
     logger.step(2, 'Submit loan application');
     await loansPage.submitLoanApplication(testData.loan.personal);
-   
+
     logger.step(3, 'Verify success message');
     const successMessage = await loansPage.getSuccessMessage();
     logger.verification(
@@ -60,7 +60,7 @@ test.describe('UI Bank Loans Tests @web @regression', () => {
   }) => {
     logger.step(1, 'Click Apply Now button');
     await loansPage.clickApplyNow();
-   
+
     logger.step(2, 'Submit loan with invalid amount');
     const invalidApplication = {
       loanType: 'personal',
@@ -69,9 +69,9 @@ test.describe('UI Bank Loans Tests @web @regression', () => {
       income: 10000, // Too low
       employmentStatus: 'part-time',
     };
-   
+
     await loansPage.submitLoanApplication(invalidApplication);
-   
+
     logger.step(3, 'Verify error message');
     const errorMessage = await loansPage.getErrorMessage();
     logger.verification(

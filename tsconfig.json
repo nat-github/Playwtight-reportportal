@@ -10,7 +10,7 @@
         ],
         // Output and Source
         "outDir": "./dist",
-        "rootDir": "./src",
+        "rootDir": ".",
         "sourceMap": true,
         "declaration": true,
         "declarationMap": true,
@@ -47,10 +47,10 @@
                 "pages/*"
             ],
             "@tests/*": [
-                "tests/*"
+                "../tests/*"
             ],
             "@support/*": [
-                "support/*"
+                "../support/*"
             ],
             "@data/*": [
                 "data/*"
@@ -70,8 +70,7 @@
             "./src/types"
         ],
         "types": [
-            "node",
-            "@playwright/test"
+            "node"
         ],
         "resolveJsonModule": true,
         "allowSyntheticDefaultImports": true,
@@ -103,6 +102,8 @@
         "src/**/*.tsx",
         "src/**/*.js",
         "src/**/*.jsx",
+        "tests/**/*.ts",
+        "support/**/*.ts",
         "playwright.config.ts"
     ],
     "exclude": [

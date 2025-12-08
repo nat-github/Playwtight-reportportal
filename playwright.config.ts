@@ -3,30 +3,30 @@ import { Environment } from './src/config/environment';
 
 export default defineConfig({
   // Make sure testDir points to correct location
-  testDir: './src/tests',
+  testDir: './tests',
   testMatch: '**/*.spec.ts',  // Add this line
-  
+
   outputDir: './reports/test-results',
   timeout: 60000,
   globalTimeout: 600000,
   expect: {
     timeout: 10000,
   },
-  
+
   // Add grep for test filtering
   grep: /@web|@api|@smoke|@regression/,
-  
+
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: Environment.RETRY_ATTEMPTS,
   workers: process.env.CI ? 2 : '50%',
-  
+
   reporter: [
     ['list'],
     ['html', { outputFolder: './reports/html-report', open: 'never' }],
     ['junit', { outputFile: './reports/junit/results.xml' }],
   ],
-  
+
   projects: [
     {
       name: 'ui-bank-chrome',
@@ -53,7 +53,7 @@ export default defineConfig({
       testMatch: '**/api/**/*.spec.ts',  // Specific pattern for API tests
     },
   ],
-  
+
   use: {
     actionTimeout: 15000,
     navigationTimeout: 30000,
