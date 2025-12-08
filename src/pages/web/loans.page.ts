@@ -24,12 +24,12 @@ export class LoansPage extends BasePage {
   }
 
   async isPageLoaded(): Promise<boolean> {
-    return await this.elements.loanList.isVisible() ||
-           await this.elements.applyNowButton.isVisible();
+    return await this.elements.applyNowButton.isVisible() ||
+      await this.elements.applyNowButton.isVisible();
   }
 
   async waitForPageLoad(): Promise<void> {
-    await this.waitForElement(this.elements.loanList.or(this.elements.applyNowButton));
+    await this.waitForElement(this.elements.applyNowButton);
   }
 
   async clickApplyNow(): Promise<void> {
@@ -39,38 +39,18 @@ export class LoansPage extends BasePage {
 
   async submitLoanApplication(application: LoanApplication): Promise<void> {
     await this.logger.info('Submitting loan application:', application);
-   
-    await this.selectOption(this.elements.loanTypeSelect, application.loanType);
+
+    await this.selectOption(this.elements.loanTermSelect, application.loanType);
     await this.typeText(this.elements.loanAmountInput, application.amount.toString());
     await this.selectOption(this.elements.loanTermSelect, application.term);
     await this.typeText(this.elements.incomeInput, application.income.toString());
-    await this.selectOption(this.elements.employmentSelect, application.employmentStatus);
-   
+
+
     await this.clickElement(this.elements.submitApplicationButton);
     await this.page.waitForLoadState('networkidle');
   }
 
-  async getSuccessMessage(): Promise<string> {
-    return await this.getElementText(this.elements.successMessage);
-  }
-
-  async getErrorMessage(): Promise<string> {
-    return await this.getElementText(this.elements.errorMessage);
-  }
-
-  async getLoanCount(): Promise<number> {
-    return await this.elements.loanItems.count();
-  }
-
-  async getApplicationStatus(): Promise<string> {
-    return await this.getElementText(this.elements.applicationStatus);
-  }
-
-  async isLoanListVisible(): Promise<boolean> {
-    return await this.elements.loanList.isVisible();
-  }
-
   async getFirstLoanAmount(): Promise<string> {
-    return await this.getElementText(this.elements.loanAmountDisplay.first());
+    return await this.getElementText(this.elements.loanAmountInput.first());
   }
 }

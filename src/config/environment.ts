@@ -9,8 +9,8 @@ export const Environment = {
   API_BASE_URL: process.env.BASE_URL_API || 'https://jsonplaceholder.typicode.com',
 
   // UI Bank Credentials
-  UI_BANK_USERNAME: process.env.UI_BANK_USERNAME || 'poc_testing',
-  UI_BANK_PASSWORD: process.env.UI_BANK_PASSWORD || 'Natarajasai@123',
+  UI_BANK_USERNAME: process.env.UI_BANK_USERNAME || 'user_poc',
+  UI_BANK_PASSWORD: process.env.UI_BANK_PASSWORD || 'Password@123',
 
   // ReportPortal Configuration
   REPORTPORTAL_ENABLED: process.env.REPORTPORTAL_ENABLED === 'true',
@@ -20,9 +20,9 @@ export const Environment = {
   REPORTPORTAL_LAUNCH: process.env.REPORTPORTAL_LAUNCH || 'Playwright_Tests_1',
 
   // Test Configuration
-  HEADLESS: process.env.HEADLESS !== 'false',
+  HEADLESS: process.env.HEADLESS !== 'true',
   SLOW_MO: parseInt(process.env.SLOW_MO || '0'),
-  RETRY_ATTEMPTS: parseInt(process.env.RETRY_ATTEMPTS || '2'),
+  RETRY_ATTEMPTS: parseInt(process.env.RETRY_ATTEMPTS || '1'),
   VIEWPORT_WIDTH: parseInt(process.env.VIEWPORT_WIDTH || '1920'),
   VIEWPORT_HEIGHT: parseInt(process.env.VIEWPORT_HEIGHT || '1080'),
 
