@@ -16,6 +16,11 @@ export class LoginPage extends BasePage {
     await this.waitForPageLoad();
   }
 
+  async logout(): Promise<void> {
+    await this.clickElement(this.elements.logoutButton);
+    await this.page.waitForURL(/welcome/, { timeout: 5000 });
+  }
+
   async isPageLoaded(): Promise<boolean> {
     return await this.elements.usernameInput.isVisible();
   }

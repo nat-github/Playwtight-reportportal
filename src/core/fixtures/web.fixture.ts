@@ -28,11 +28,11 @@ export interface TestData {
 }
 
 export interface LoanData {
-  loanType: string;
+  loanemail: string;
   amount: number;
   term: string;
   income: number;
-  employmentStatus: string;
+  age: number;
 }
 
 // Extended test with fixtures
@@ -53,25 +53,25 @@ export const test = baseTest.extend<WebFixtures>({
       },
       loan: {
         personal: {
-          loanType: 'personal',
+          loanemail: 'personal@test.com',
           amount: 5000,
-          term: '12 months',
+          term: '3',
           income: 60000,
-          employmentStatus: 'full-time',
+          age: 25,
         },
         auto: {
-          loanType: 'auto',
+          loanemail: 'auto@test.com',
           amount: 25000,
-          term: '60 months',
+          term: '5',
           income: 80000,
-          employmentStatus: 'full-time',
+          age: 25,
         },
         mortgage: {
-          loanType: 'mortgage',
+          loanemail: 'mortgage@test.com',
           amount: 300000,
-          term: '30 years',
+          term: '3',
           income: 120000,
-          employmentStatus: 'full-time',
+          age: 25,
         },
       },
     };

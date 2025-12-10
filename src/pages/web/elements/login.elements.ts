@@ -8,7 +8,7 @@ export class LoginElements {
   readonly passwordInput: Locator;
   readonly loginButton: Locator;
   readonly privacyButton: Locator;
-
+  readonly logoutButton: Locator;
 
   // Navigation elements
   readonly loansLink: Locator;
@@ -21,10 +21,11 @@ export class LoginElements {
     this.passwordInput = page.locator('#password');
     this.loginButton = page.getByText('Sign In');
     this.privacyButton = page.locator('button:has-text("I agree to the Privacy Policy →")');
+    this.logoutButton = page.getByRole('link', { name: 'Logout' });
 
     // Navigation (after login)
 
-    this.loansLink = page.locator('#applyForLoan');
+    this.loansLink = page.getByRole('link', { name: 'Apply For A Loan →' })
 
   }
 }

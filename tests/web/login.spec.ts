@@ -69,8 +69,10 @@ test.describe('UI Bank Login Tests @web @smoke', () => {
       testData.user.password
     );
 
+    logger.step(2, 'Logout');
+    await loginPage.logout();
 
     logger.step(3, 'Verify redirected to login page');
-    await expect(loginPage.page).toHaveURL(/login/);
+    await expect(loginPage.page).toHaveURL(/welcome/);
   });
 });

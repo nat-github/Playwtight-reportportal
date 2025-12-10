@@ -38,11 +38,11 @@ test.describe('UI Bank Loans Tests @web @regression', () => {
 
     logger.step(2, 'Submit loan with invalid amount');
     const invalidApplication = {
-      loanType: 'personal',
+      loanemail: 'personal@test.com',
       amount: 1000000, // Too high
-      term: '12 months',
+      term: '1',
       income: 10000, // Too low
-      employmentStatus: 'part-time',
+      age: 25,
     };
 
     await loansPage.submitLoanApplication(invalidApplication);

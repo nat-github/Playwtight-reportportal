@@ -3,11 +3,11 @@ import { BasePage } from '../../core/base/base.page';
 import { LoansElements } from './elements/loans.elements';
 
 export interface LoanApplication {
-  loanType: string;
+  loanemail: string;
   amount: number;
   term: string;
   income: number;
-  employmentStatus: string;
+  age: number;
 }
 
 export class LoansPage extends BasePage {
@@ -40,10 +40,11 @@ export class LoansPage extends BasePage {
   async submitLoanApplication(application: LoanApplication): Promise<void> {
     await this.logger.info('Submitting loan application:', application);
 
-    await this.selectOption(this.elements.loanTermSelect, application.loanType);
+    await this.typeText(this.elements.loanemail, application.loanemail);
     await this.typeText(this.elements.loanAmountInput, application.amount.toString());
     await this.selectOption(this.elements.loanTermSelect, application.term);
     await this.typeText(this.elements.incomeInput, application.income.toString());
+    await this.typeText(this.elements.age, application.age.toString());
 
 
     await this.clickElement(this.elements.submitApplicationButton);
